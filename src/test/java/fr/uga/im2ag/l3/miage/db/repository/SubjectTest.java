@@ -1,6 +1,7 @@
 package fr.uga.im2ag.l3.miage.db.repository;
 
 import fr.uga.im2ag.l3.miage.db.model.Subject;
+import fr.uga.im2ag.l3.miage.db.model.Teacher;
 import fr.uga.im2ag.l3.miage.db.repository.api.SubjectRepository;
 import fr.uga.im2ag.l3.miage.db.repository.api.TeacherRepository;
 
@@ -9,6 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 class SubjectTest extends Base {
 
@@ -57,9 +61,11 @@ class SubjectTest extends Base {
         entityManager.getTransaction().commit();
         entityManager.detach(teacher);
 
-        var pSubject = subjectRepository.findTeachers(subject.getId());
-        assertThat(pSubject).isNotNull();
-        assertThat(pSubject).isEqualTo(teacher);
+        var pSubject = (ArrayList<Teacher>) subjectRepository.findTeachers(subject.getId());
+        ArrayList<Teacher> listTeacher = new ArrayList<>();
+        listTeacher.add(teacher);
+        assertThat(pSubject).isNotEmpty();
+        assertThat(pSubject).isEqualTo(listTeacher);
     }
     // faut créer un Teacher, le save dans la bd, et après tu detach le Teacher que
     // t'as créé, tu récupère l'instance depuis la bd et tu compares (ils doivent

@@ -30,7 +30,7 @@ public class GraduationClass {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "gd_year")
     private Integer year;
 
     @OneToMany(mappedBy = "belongTo")

@@ -26,7 +26,7 @@ public class Grade {
     @ManyToOne
     private Subject subject;
 
-    @Column(nullable = false)
+    @Column(name = "g_value")
     private Float value;
 
     @Column(nullable = false)

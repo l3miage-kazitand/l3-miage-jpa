@@ -58,4 +58,12 @@ public class Teacher extends Person {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o){
+        Teacher teacher = (Teacher) o;
+        return this.getId() == teacher.getId() 
+        && this.getHeading() == teacher.getHeading()
+        && this.getTeaching() == teacher.getTeaching();
+    }
+
 }
