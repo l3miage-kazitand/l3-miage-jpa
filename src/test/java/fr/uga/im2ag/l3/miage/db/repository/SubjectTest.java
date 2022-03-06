@@ -1,6 +1,9 @@
 package fr.uga.im2ag.l3.miage.db.repository;
 
+import fr.uga.im2ag.l3.miage.db.model.Subject;
 import fr.uga.im2ag.l3.miage.db.repository.api.SubjectRepository;
+import fr.uga.im2ag.l3.miage.db.repository.api.TeacherRepository;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +44,24 @@ class SubjectTest extends Base {
 
     @Test
     void shouldFindTeachersForSubject() {
-        // TODO
-    }
+        final var subject = Fixtures.createSubject();
+        final var grade = Fixtures.createClass();
+        final var favs = Fixtures.createStudent(grade);
+        final var teacher = Fixtures.createTeacher(subject, grade, favs);
 
+        entityManager.getTransaction().begin();
+        entityManager.persist(subject);
+        entityManager.persist(grade);
+        entityManager.persist(favs);
+        entityManager.persist(teacher);
+        entityManager.getTransaction().commit();
+        entityManager.detach(teacher);
+
+        var pSubject = subjectRepository.findTeachers(subject.getId());
+        assertThat(pSubject).isNotNull();
+        assertThat(pSubject).isEqualTo(teacher);
+    }
+    // faut créer un Teacher, le save dans la bd, et après tu detach le Teacher que
+    // t'as créé, tu récupère l'instance depuis la bd et tu compares (ils doivent
+    // être pareil)
 }

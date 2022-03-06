@@ -1,9 +1,13 @@
 package fr.uga.im2ag.l3.miage.db.repository.impl;
 
 import fr.uga.im2ag.l3.miage.db.repository.api.TeacherRepository;
+import fr.uga.im2ag.l3.miage.db.model.GraduationClass;
+import fr.uga.im2ag.l3.miage.db.model.Student;
 import fr.uga.im2ag.l3.miage.db.model.Teacher;
 
 import javax.persistence.EntityManager;
+import javax.persistence.ManyToOne;
+
 import java.util.List;
 
 public class TeacherRepositoryImpl extends BaseRepositoryImpl implements TeacherRepository {
@@ -20,8 +24,10 @@ public class TeacherRepositoryImpl extends BaseRepositoryImpl implements Teacher
 
     @Override
     public Teacher findHeadingGraduationClassByYearAndName(Integer year, String name) {
-        // TODO
-        return null;
+        return (Teacher) entityManager.createQuery("select * from GraduationClass G where G.year = :year and G.name = :name", GraduationClass.class)
+        .setParameter("year", year)
+        .setParameter("name", name)
+        .getResultList();
     }
 
     @Override
@@ -38,13 +44,12 @@ public class TeacherRepositoryImpl extends BaseRepositoryImpl implements Teacher
 
     @Override
     public Teacher findById(Long id) {
-        // TODO
-        return null;
+        return entityManager.find(Teacher.class, id);
     }
 
     @Override
     public List<Teacher> getAll() {
-        // TODO
-        return null;
+        return entityManager.createNamedQuery("get-all-teachers", Teacher.class)
+                .getResultList();
     }
 }

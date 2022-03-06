@@ -5,11 +5,12 @@ import fr.uga.im2ag.l3.miage.db.model.Subject;
 import fr.uga.im2ag.l3.miage.db.model.Teacher;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Id;
+
 import java.util.Collection;
 import java.util.List;
 
 public class SubjectRepositoryImpl extends BaseRepositoryImpl implements SubjectRepository {
-
 
     public SubjectRepositoryImpl(EntityManager entityManager) {
         super(entityManager);
@@ -27,19 +28,19 @@ public class SubjectRepositoryImpl extends BaseRepositoryImpl implements Subject
 
     @Override
     public Subject findById(Long id) {
-        // TODO
-        return null;
+        return entityManager.find(Subject.class, id);
     }
 
     @Override
     public List<Subject> getAll() {
-        // TODO
-        return null;
+        return entityManager.createNamedQuery("get-all-subjects", Subject.class)
+                .getResultList();
     }
 
     @Override
     public Collection<Teacher> findTeachers(Long id) {
-        // TODO
-        return null;
+        return entityManager.createQuery("select t from Teacher t join t.teaching s where s.id = :id", Teacher.class)
+                .setParameter("id", id)
+                .getResultList();
     }
 }

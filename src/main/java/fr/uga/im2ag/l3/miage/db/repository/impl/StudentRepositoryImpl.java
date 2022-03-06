@@ -4,6 +4,9 @@ import fr.uga.im2ag.l3.miage.db.repository.api.StudentRepository;
 import fr.uga.im2ag.l3.miage.db.model.Student;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Id;
+import javax.tools.ForwardingJavaFileManager;
+
 import java.util.List;
 
 public class StudentRepositoryImpl extends BaseRepositoryImpl implements StudentRepository {
@@ -32,14 +35,13 @@ public class StudentRepositoryImpl extends BaseRepositoryImpl implements Student
 
     @Override
     public Student findById(Long id) {
-        // TODO
-        return null;
+        return entityManager.find(Student.class, id);
     }
 
     @Override
     public List<Student> getAll() {
-        // TODO
-        return null;
+        return entityManager.createNamedQuery("get-all-students", Student.class)
+                .getResultList();
     }
 
     @Override

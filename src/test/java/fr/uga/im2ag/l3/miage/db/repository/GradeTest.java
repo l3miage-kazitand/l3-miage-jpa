@@ -1,9 +1,14 @@
 package fr.uga.im2ag.l3.miage.db.repository;
 
+import fr.uga.im2ag.l3.miage.db.model.Grade;
 import fr.uga.im2ag.l3.miage.db.repository.api.GradeRepository;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GradeTest extends Base {
 
@@ -23,7 +28,18 @@ class GradeTest extends Base {
 
     @Test
     void shouldSaveGrade() {
-        // TODO
+        final var subject = Fixtures.createSubject();
+        final var grade = Fixtures.createGrade(subject);
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(subject);
+        gradeRepository.save(grade);
+        entityManager.getTransaction().commit();
+        entityManager.detach(grade);
+
+        var pGrade = (Grade) gradeRepository.getAll().toArray()[0];
+        assertThat(pGrade).isNotNull().isNotSameAs(grade);
+        assertThat(pGrade.getSubject()).isEqualTo(subject);
     }
 
     @Test
