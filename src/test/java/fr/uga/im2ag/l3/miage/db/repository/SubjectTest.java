@@ -67,7 +67,4 @@ class SubjectTest extends Base {
         assertThat(pSubject).isNotEmpty();
         assertThat(pSubject).isEqualTo(listTeacher);
     }
-    // faut créer un Teacher, le save dans la bd, et après tu detach le Teacher que
-    // t'as créé, tu récupère l'instance depuis la bd et tu compares (ils doivent
-    // être pareil)
 }

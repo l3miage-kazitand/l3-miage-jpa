@@ -24,6 +24,17 @@ class TeacherTest extends Base {
     @Test
     void shouldSaveTeacher()  {
         // TODO
+        final var subject = Fixtures.createSubject();
+        final var grade = Fixtures.createClass();
+        final var favs = Fixtures.createStudent(grade);
+        final var teacher = Fixtures.createTeacher(subject, grade, favs);
+
+        entityManager.getTransaction().begin();
+        teacherRepository.save(teacher);
+        entityManager.getTransaction().commit();
+        entityManager.detach(teacher);
+
+        var pStudent = teacherRepository.findById(teacher.getId());
     }
 
     @Test

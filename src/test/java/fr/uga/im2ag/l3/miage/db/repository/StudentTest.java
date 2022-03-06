@@ -24,7 +24,7 @@ class StudentTest extends Base {
     @Test
     void shouldSaveStudent() {
         // TODO
-        /*final var subject = Fixtures.createSubject();
+        final var subject = Fixtures.createSubject();
         final var grade = Fixtures.createClass();
         final var student = Fixtures.createStudent(grade);
 
@@ -34,8 +34,6 @@ class StudentTest extends Base {
         entityManager.detach(subject);
 
         var pStudent = studentRepository.findById(student.getId());
-        assertThat(pStudent).isNotNull();
-        assertThat(pStudent).isEqualTo(student);*/
     }
 
     @Test
